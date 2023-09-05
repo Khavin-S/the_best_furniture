@@ -1,7 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import '../Global.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,13 +15,7 @@ class _HomePageState extends State<HomePage> {
             EdgeInsets.only(left: screenWidth / 3, right: screenHeight / 3),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                },
-                child: Text('Logout'))
-          ],
+          children: [ElevatedButton(onPressed: () {}, child: Text('Logout'))],
         ),
       );
 }
