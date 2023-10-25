@@ -1,53 +1,51 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:the_best_furniture/pages/home_page.dart';
-import 'package:the_best_furniture/pages/login_page.dart';
+import 'package:the_best_furniture/classes/admin.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      options: const FirebaseOptions(
-    // these are variable
-    // for each firebase project
-    apiKey: "AIzaSyD5CeMRxoR8CGVkDC7E5kC1ttAN8HHYreg",
-    authDomain: "flutter-web-4a4ec.firebaseapp.com",
-    projectId: "flutter-web-4a4ec",
-    storageBucket: "flutter-web-4a4ec.appspot.com",
-    messagingSenderId: "248879915947",
-    appId: "1:248879915947:web:b1b1c8084e95174b21a8ee",
-  ));
+    options: const FirebaseOptions(
+        apiKey: "AIzaSyC149qYLlQesce6TsDH8y6khPsztJ1Sqeg",
+        authDomain: "the-best-furniture-52bee.firebaseapp.com",
+        projectId: "the-best-furniture-52bee",
+        storageBucket: "the-best-furniture-52bee.appspot.com",
+        messagingSenderId: "839822430887",
+        appId: "1:839822430887:web:e099b46c1aa1e81d260182",
+        measurementId: "G-D4STXV438G"),
+  );
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: FirstPageDecider(),
+      title: 'The Best Furniture',
+      home: Scaffold(
+          body: ElevatedButton(
+              onPressed: () => Admin().addCategories(
+                  "Chairs", "Stylish chairs for various purposes."),
+              child: const Text("Addcategory"))),
     );
   }
-}
 
-class FirstPageDecider extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return HomePage();
-          } else {
-            return LoginPage();
-          }
-        },
-      ),
-    );
+  Future<File?> pickImageForProduct() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      return file;
+    } else {
+      print("No file selected");
+    }
   }
 }
