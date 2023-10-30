@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:the_best_furniture/classes/widgets/myscreensize.dart';
-import 'package:the_best_furniture/pages/productpage.dart';
+import 'package:the_best_furniture/pages/loginpage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,19 +18,16 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenSize.init(context);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'The Best Furniture',
-        theme: ThemeData(fontFamily: 'Kanit'),
-        home: ProductPage());
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.blue,
+        ),
+        home: LoginPage());
   }
 }

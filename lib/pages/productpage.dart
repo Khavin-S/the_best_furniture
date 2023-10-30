@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:the_best_furniture/classes/admin.dart';
 import 'package:the_best_furniture/classes/product.dart';
 import 'package:the_best_furniture/classes/productservice.dart';
-import 'package:the_best_furniture/classes/widgets/myAppBar.dart';
+import 'package:the_best_furniture/classes/widgets/myappbar.dart';
 import 'package:the_best_furniture/classes/widgets/myscreensize.dart';
 
 class ProductPage extends StatelessWidget {
@@ -33,8 +33,8 @@ class FilterSection extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
-          onPressed: () {
-            Admin().addProducts("Chairs", 7000, "Chairs", "image", 1);
+          onPressed: () async {
+            await Admin().addProducts("Chairs", 7000, "Chairs", "image", 1);
           },
           child: Text("AddProducts")),
     );
@@ -89,7 +89,7 @@ class ProductCard extends StatelessWidget {
       shadowColor: Colors.red,
       child: Column(
         children: [
-          Image.network(product.image),
+          Image.network(""),
           Padding(
             padding: EdgeInsets.all(8),
             child: Column(
