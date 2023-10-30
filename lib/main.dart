@@ -1,9 +1,7 @@
-import 'dart:io';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:the_best_furniture/classes/admin.dart';
+import 'package:the_best_furniture/classes/widgets/myscreensize.dart';
+import 'package:the_best_furniture/pages/productpage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,24 +26,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    ScreenSize.init(context);
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'The Best Furniture',
-      home: Scaffold(
-          body: ElevatedButton(
-              onPressed: () => Admin().addCategories(
-                  "Chairs", "Stylish chairs for various purposes."),
-              child: const Text("Addcategory"))),
-    );
-  }
-
-  Future<File?> pickImageForProduct() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      File file = File(result.files.single.path!);
-      return file;
-    } else {
-      print("No file selected");
-    }
+        debugShowCheckedModeBanner: false,
+        title: 'The Best Furniture',
+        theme: ThemeData(fontFamily: 'Kanit'),
+        home: ProductPage());
   }
 }

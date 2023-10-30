@@ -6,7 +6,7 @@ class Product {
   int price;
   String category;
   String image;
-  String stock;
+  int stock;
 
   Product({
     required this.id,
