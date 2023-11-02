@@ -19,6 +19,8 @@ class Admin {
       String name, int price, String category, String image, int stock) async {
     int allProductCount = await getTotalProductCount();
     int categoryProductCount = await getCategoryProductCount(category);
+    allProductCount++;
+    categoryProductCount++;
     productCollection
         .doc("#${category.substring(0, 2).toUpperCase()}-$categoryProductCount")
         .set({

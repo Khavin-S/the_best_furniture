@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:the_best_furniture/classes/widgets/myscreensize.dart';
+import 'package:the_best_furniture/classes/widegts.dart';
 import 'package:the_best_furniture/pages/loginpage.dart';
 
 void main() async {
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'The Best Furniture',
         theme: ThemeData(
-          scaffoldBackgroundColor: Colors.blue,
+          scaffoldBackgroundColor:  Colors.blue,
         ),
         home: LoginPage());
   }

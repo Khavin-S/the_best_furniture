@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:the_best_furniture/classes/admin.dart';
 import 'package:the_best_furniture/classes/product.dart';
 import 'package:the_best_furniture/classes/productservice.dart';
-import 'package:the_best_furniture/classes/widgets/myappbar.dart';
-import 'package:the_best_furniture/classes/widgets/myscreensize.dart';
+import 'package:the_best_furniture/classes/widegts.dart';
 
 class ProductPage extends StatelessWidget {
   @override
@@ -15,11 +13,13 @@ class ProductPage extends StatelessWidget {
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             MyAppBar(title: "THE BEST FURNITURE"),
           ],
-          body: Row(
-            children: [
-              Expanded(flex: 1, child: FilterSection()),
-              Expanded(flex: 4, child: ProductGridSection()),
-            ],
+          body: Card(
+            margin: EdgeInsets.all(ScreenSize.screenWidth*0.2),
+            child: Row(
+              children: [
+                Expanded(flex: 4, child: ProductGridSection()),
+              ],
+            ),
           ),
         ),
       ),
@@ -27,19 +27,6 @@ class ProductPage extends StatelessWidget {
   }
 }
 
-class FilterSection extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ElevatedButton(
-          onPressed: () async {
-            await Admin().addProducts("Chairs", 7000, "Chairs", "image", 1);
-          },
-          child: Text("AddProducts")),
-    );
-  }
-}
 
 class ProductGridSection extends StatelessWidget {
   @override
@@ -86,10 +73,10 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
-      shadowColor: Colors.red,
+      shadowColor: Colors.blue,
       child: Column(
         children: [
-          Image.network(""),
+          Image.network(product.image),
           Padding(
             padding: EdgeInsets.all(8),
             child: Column(
