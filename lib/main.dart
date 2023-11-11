@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:the_best_furniture/classes/widegts.dart';
-import 'package:the_best_furniture/pages/loginpage.dart';
+import 'package:the_best_furniture/classes/theme.dart';
+import 'package:the_best_furniture/pages/user/homepage.dart';
+import 'package:the_best_furniture/pages/user/mainpage.dart';
+import 'package:the_best_furniture/others/widegts.dart';
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: const FirebaseOptions(
@@ -15,6 +19,7 @@ void main() async {
         appId: "1:839822430887:web:e099b46c1aa1e81d260182",
         measurementId: "G-D4STXV438G"),
   );
+  FirebaseAuth.instance.signOut();
   runApp(MyApp());
 }
 
@@ -24,10 +29,23 @@ class MyApp extends StatelessWidget {
     ScreenSize.init(context);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme:MyTheme.currentTheme(false),
         title: 'The Best Furniture',
-        theme: ThemeData(
-          scaffoldBackgroundColor:  Colors.blue,
-        ),
-        home: LoginPage());
+        home: FirstPageDecider());
+  }
+}
+
+class FirstPageDecider extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+        body: StreamBuilder<User?>(stream: FirebaseAuth.instance.authStateChanges(), builder: (context, snapshot) {
+          if(snapshot.hasData){
+            return  HomePage();
+          }
+          else{
+            return MainPage();
+          }
+        }));
   }
 }

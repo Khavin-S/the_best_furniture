@@ -1,28 +1,24 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:the_best_furniture/classes/collections%20and%20documents.dart';
 import 'package:the_best_furniture/classes/product.dart';
 import 'package:the_best_furniture/classes/category.dart';
 
 class ProductService {
-  final CollectionReference productsCollection =
-      FirebaseFirestore.instance.collection('products');
-  final CollectionReference categoryCollection =
-      FirebaseFirestore.instance.collection('categories');
-
   Stream<List<Product>> getProductStream() {
-    return productsCollection.snapshots().map((querySnapshot) => querySnapshot
+    return Collections.productsCollection.snapshots().map((querySnapshot) => querySnapshot
         .docs
         .map((doc) =>
             Product.fromMap(doc as DocumentSnapshot<Map<String, dynamic>>))
         .toList());
   }
 
-  Stream<List<Category>> getCategoryStream() {
-    return categoryCollection.snapshots().map((querySnapshot) => querySnapshot
+  Stream<List<Categories>> getCategoryStream() {
+    return Collections.categoriesCollection.snapshots().map((querySnapshot) => querySnapshot
         .docs
         .map((doc) =>
-            Category.fromMap(doc as DocumentSnapshot<Map<String, dynamic>>))
+            Categories.fromMap(doc as DocumentSnapshot<Map<String, dynamic>>))
         .toList());
   }
 
