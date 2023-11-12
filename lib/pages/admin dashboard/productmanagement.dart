@@ -56,7 +56,7 @@ class _ProductManagementState extends State<ProductManagement> {
               return const Center(child: CircularProgressIndicator());
             }
             if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Center(child:  Text('No category available.',style: MyTextStyles.titleTextStyle,));
+              return const Center(child:  Text('No category available.'));
             }
             return DropdownButton( items: snapshot.data!.map((category) {
                       return DropdownMenuItem<String>(

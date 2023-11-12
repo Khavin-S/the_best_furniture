@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:the_best_furniture/classes/theme.dart';
 import 'package:the_best_furniture/pages/user/homepage.dart';
 import 'package:the_best_furniture/pages/user/mainpage.dart';
 import 'package:the_best_furniture/others/widegts.dart';
@@ -29,7 +28,10 @@ class MyApp extends StatelessWidget {
     ScreenSize.init(context);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme:MyTheme.currentTheme(false),
+        theme: ThemeData(
+            primarySwatch: Colors.deepPurple
+      
+        ),
         title: 'The Best Furniture',
         home: FirstPageDecider());
   }
@@ -39,13 +41,15 @@ class FirstPageDecider extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-        body: StreamBuilder<User?>(stream: FirebaseAuth.instance.authStateChanges(), builder: (context, snapshot) {
+        body: /*StreamBuilder<User?>(stream: FirebaseAuth.instance.authStateChanges(),
+         builder: (context, snapshot) {
           if(snapshot.hasData){
             return  HomePage();
           }
           else{
-            return MainPage();
+            return AuthPage();
           }
-        }));
+        })*/
+        AuthPage());
   }
 }

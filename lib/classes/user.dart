@@ -50,7 +50,7 @@ class User{
       await Collections.usersCollection.doc('#USER$count').set({
         'name': name,
         'email': email,
-        'id': '#User$count',
+        'id': '#USER$count',
         'address': address,
         'number': number,
         'password': password
@@ -77,7 +77,7 @@ class User{
           return const Center(
               child: Text(
             'No products available.',
-            style: MyTextStyles.titleTextStyle,
+           
           ));
         }
         final products = snapshot.data!;

@@ -14,7 +14,7 @@ class GetCounts {
   }
 
   static Future<int> getTotalUserCount() async {
-    final DocumentSnapshot snapshot = await Documents.productsCount.get();
+    final DocumentSnapshot snapshot = await Documents.usersCount.get();
     return await snapshot.get('count');
   }
 
@@ -31,7 +31,7 @@ class GetCounts {
 
 class SetCount {
   static Future<void> updateUserCount(int count) async {
-    await Collections.usersCollection.doc('User count').set({'count': count});
+    await Documents.usersCount.set({'count': count});
   }
 
   static Future<void> updateProductCount(int count) async {

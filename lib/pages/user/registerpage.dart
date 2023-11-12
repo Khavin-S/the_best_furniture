@@ -26,14 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
     );
   }
-   void handleUserRegister(BuildContext context) async{
-    if(name!="" && email!="" && password!="" && address!="" && number!=""){      
-    bool isSignedUp=  await User(name: name,email: email,password: password,address: address,number: number).signUp();
-    if(isSignedUp){      
-      Navigation.goto(context,LoginPage());
-    }
-    }
-  }
+   
 }
 
 
