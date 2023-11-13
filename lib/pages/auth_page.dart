@@ -3,7 +3,7 @@ import 'package:the_best_furniture/models/user.dart';
 import 'package:the_best_furniture/providers/screen_size.dart';
 import 'package:the_best_furniture/widgets/custom_button.dart';
 import 'package:the_best_furniture/widgets/custom_textfield.dart';
-import 'package:the_best_furniture/screens/product_screen.dart';
+import 'package:the_best_furniture/pages/product_page.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
