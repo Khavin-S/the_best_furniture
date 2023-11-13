@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:the_best_furniture/classes/collections%20and%20documents.dart';
+import 'package:the_best_furniture/models/collections%20and%20documents.dart';
 
 class GetCounts {
   static Future<int> getTotalProductCount() async {

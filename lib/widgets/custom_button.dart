@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:the_best_furniture/others/widegts.dart';
+import 'package:the_best_furniture/providers/screen_size.dart';
 
 class MyButton extends StatelessWidget {
   final String text;

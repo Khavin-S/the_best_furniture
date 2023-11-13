@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:the_best_furniture/others/widegts.dart';
+import 'package:the_best_furniture/providers/screen_size.dart';
 
 class MyTextField extends StatelessWidget {
   TextEditingController controller =TextEditingController();
@@ -7,8 +7,6 @@ class MyTextField extends StatelessWidget {
   Icon? perfixIcon;
   Icon? suffixIcon;
   MyTextField({required this.hintText,required this.controller,this.perfixIcon,this.suffixIcon});
-  
-
   @override
   Widget build(BuildContext context) {
     return Container(

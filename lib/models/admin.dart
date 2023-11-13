@@ -1,19 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:the_best_furniture/classes/collections%20and%20documents.dart';
-import 'package:the_best_furniture/classes/counts.dart';
-import 'package:the_best_furniture/classes/product.dart';
-import 'package:the_best_furniture/classes/productservice.dart';
-import 'package:the_best_furniture/others/widegts.dart';
-import 'package:the_best_furniture/pages/user/productpage.dart';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:the_best_furniture/models/collections%20and%20documents.dart';
+import 'package:the_best_furniture/models/counts.dart';
+
 
 class Admin {
-  void addCategories(String name, String description) {
+  void addCategories(String name, String description, String image) {
     Collections.categoriesCollection
         .doc(name)
-        .set({'name': name, 'description': description, 'count': 0});
+        .set({'name': name, 'description': description, 'count': 0, 'image': image});
   }
 
-  Future<void> addProducts(String name, int price, String? category, String? image, int stock) async {
+  Future<void> addProducts(String name, int price, String? category, String? image, int stock, String color) async {
     int categoryCount = await (GetCounts.getCategoryProductCount(category!))+1;
     Collections.productsCollection
         .doc("#${category.substring(0, 2).toUpperCase()}-$categoryCount")
@@ -24,6 +23,7 @@ class Admin {
       'category': category,
       'image': image,
       'stock': stock,
+      'color': color,
     });
     SetCount.updateCategoryCount(category, categoryCount);
     int productCount = await (GetCounts.getTotalProductCount())+1;
@@ -39,13 +39,14 @@ class Admin {
   }
 
   Future<void> updateProduct(String productId, String name, int price,
-      String category, String image, int stock) async {
+      String category, String image, int stock,String color) async {
     await Collections.productsCollection.doc(productId).set({
       'name': name,
       'price': price,
       'category': category,
       'image': image,
       'stock': stock,
+      'color': color,
     });
   }
 
@@ -61,6 +62,16 @@ class Admin {
   Future<int> orderCount() async{
    return await (GetCounts.getordersCount());
   }
-  
- 
+
+
+    Future<File?> pickImageForProduct() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      return file;
+    } else {
+      print("No file selected");
+    }
+    return null;
+  }
 }

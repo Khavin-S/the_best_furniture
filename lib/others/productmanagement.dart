@@ -2,10 +2,9 @@ import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:the_best_furniture/classes/admin.dart';
-import 'package:the_best_furniture/classes/category.dart';
-import 'package:the_best_furniture/classes/productservice.dart';
-import 'package:the_best_furniture/others/widegts.dart';
+import 'package:the_best_furniture/models/admin.dart';
+import 'package:the_best_furniture/models/category.dart';
+import 'package:the_best_furniture/models/productservice.dart';
 
 class ProductManagement extends StatefulWidget {
   const ProductManagement({super.key});
@@ -75,7 +74,7 @@ class _ProductManagementState extends State<ProductManagement> {
             },icon: const Icon(Icons.upload_file_sharp),),
             ElevatedButton(
               onPressed: (){
-                Admin().addProducts(_nameController.text, int.parse(_priceController.text), selectedCategory, downloadUrl, int.parse(_stockController.text));
+                Admin().addProducts(_nameController.text, int.parse(_priceController.text), selectedCategory, downloadUrl, int.parse(_stockController.text),"black");
               },
               child: const Text('Add or Update products'),
             ),
@@ -108,3 +107,27 @@ class _ProductManagementState extends State<ProductManagement> {
     return url;
   }
 }
+
+/*class ProductPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Card(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+              MyAppBar(title: "THE BEST FURNITURE"),
+            ],
+            body: Row(
+              children: [
+                Expanded(flex: 4, child: ProductGridSection()),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+} */

@@ -5,6 +5,7 @@ class Product {
   String name;
   int price;
   String category;
+  String color;
   String image;
   int stock;
 
@@ -13,6 +14,7 @@ class Product {
     required this.name,
     required this.price,
     required this.category,
+    required this.color,
     required this.image,
     required this.stock,
   });
@@ -24,6 +26,7 @@ class Product {
       name: data['name'],
       price: data['price'],
       category: data['category'],
+      color: data['color'],
       image: data['image'],
       stock: data['stock'],
     );
