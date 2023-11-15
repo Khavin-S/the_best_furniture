@@ -31,16 +31,15 @@ class GetCounts {
 
 class SetCount {
   static Future<void> updateUserCount(int count) async {
-    await Documents.usersCount.set({'count': count});
+    await Documents.usersCount.update({'count': count});
   }
 
   static Future<void> updateProductCount(int count) async {
-    await Documents.productsCount.set({'count': count});
+    await Documents.productsCount.update({'count': count});
   }
 
   static Future<void> updateCategoryCount(String category, int count) async {
     await Collections.categoriesCollection
-        .doc(category)
-        .set({'count': count, 'name': category, 'description': ''});
+        .doc(category).update({'count': count});
   }
 }

@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:the_best_furniture/models/admin.dart';
 import 'package:the_best_furniture/models/category.dart';
+import 'package:the_best_furniture/models/colors.dart';
 import 'package:the_best_furniture/models/productservice.dart';
 
 class ProductManagement extends StatefulWidget {
@@ -14,11 +15,12 @@ class ProductManagement extends StatefulWidget {
 }
 
 class _ProductManagementState extends State<ProductManagement> {
-  final TextEditingController _idController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _priceController = TextEditingController();
-  final TextEditingController _stockController = TextEditingController();
-  String selectedCategory="chairs";
+  final TextEditingController idController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController priceController = TextEditingController();
+  final TextEditingController stockController = TextEditingController();
+  String selectedCategory="";
+  String selectedColor="";
   String? downloadUrl;
   @override
   Widget build(BuildContext context) {
@@ -29,19 +31,19 @@ class _ProductManagementState extends State<ProductManagement> {
         child: Column(
           children: [
             TextFormField(
-              controller: _idController,
+              controller: idController,
               decoration: const InputDecoration(labelText: 'Product ID'),
             ),
             TextFormField(
-              controller: _nameController,
+              controller: nameController,
               decoration: const InputDecoration(labelText: 'Product Name'),
             ),
             TextFormField(
-              controller: _priceController,
+              controller: priceController,
               decoration: const InputDecoration(labelText: 'Product price'),
             ),
             TextFormField(
-              controller: _stockController,
+              controller: stockController,
               decoration: const InputDecoration(labelText: 'Product stock'),
               keyboardType: TextInputType.number,
             ),
@@ -69,12 +71,36 @@ class _ProductManagementState extends State<ProductManagement> {
                     },);
           },
             ),
+          StreamBuilder<List<ProductColors>>(
+          stream: productService.getColorStream(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child:  Text('No color available.'));
+            }
+            return DropdownButton( items: snapshot.data!.map((color) {
+                      return DropdownMenuItem<String>(
+                        value:  color.name,
+                        child: Text(color.name),
+                      );
+                    }).toList(), onChanged: (String? newValue) {
+                      setState(() {
+                        selectedColor = newValue!;
+                      });
+                    },);
+          },
+            ),
             IconButton(onPressed: (){
               handleImageUpload();
             },icon: const Icon(Icons.upload_file_sharp),),
             ElevatedButton(
               onPressed: (){
-                Admin().addProducts(_nameController.text, int.parse(_priceController.text), selectedCategory, downloadUrl, int.parse(_stockController.text),"black");
+                Admin().addProducts(nameController.text, int.parse(priceController.text), selectedCategory, downloadUrl, int.parse(stockController.text),selectedColor);
               },
               child: const Text('Add or Update products'),
             ),
@@ -84,7 +110,6 @@ class _ProductManagementState extends State<ProductManagement> {
       ),
     );
   }
-
 
   Future<void> handleImageUpload() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -100,7 +125,7 @@ class _ProductManagementState extends State<ProductManagement> {
   }
 
   Future<String> uploadImage(Uint8List bytes) async {
-    Reference storageReference = FirebaseStorage.instance.ref().child("images/image.jpg");
+    Reference storageReference = FirebaseStorage.instance.ref().child("images/");
     UploadTask uploadTask = storageReference.putData(bytes);
     await uploadTask.whenComplete(() => null);
     String url = await storageReference.getDownloadURL();

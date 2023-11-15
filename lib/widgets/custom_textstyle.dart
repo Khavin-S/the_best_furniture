@@ -8,13 +8,14 @@ class MyTextStyle {
   );
 
   static const TextStyle subtitleStyle = TextStyle(
-    fontSize: 25.0,
+    fontSize: 30.0,
     fontWeight: FontWeight.bold,
   );
 
   static const TextStyle bodyStyle = TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.normal,
+    fontSize: 17.0,
+    fontStyle: FontStyle.italic,
+    fontWeight: FontWeight.bold,
   );
 
   

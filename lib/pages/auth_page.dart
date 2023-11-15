@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:the_best_furniture/models/user.dart';
+import 'package:the_best_furniture/pages/admin/addproduct_page.dart';
+import 'package:the_best_furniture/pages/admin/dashboard_page.dart';
 import 'package:the_best_furniture/pages/home_page.dart';
+import 'package:the_best_furniture/pages/product_screen.dart';
 import 'package:the_best_furniture/providers/navigation.dart';
 import 'package:the_best_furniture/providers/screen_size.dart';
 import 'package:the_best_furniture/widgets/custom_button.dart';
@@ -269,7 +272,7 @@ class _AuthScreenState extends State<AuthScreen> {
       final bool signedIn =
           await User(email: email, password: password).signIn();
       if (signedIn) {
-      Navigation.goto(context, HomePage());
+      Navigation.goto(context, ProductPage());
       }
     } else {
       if (email == "" && password == "") {
@@ -300,7 +303,7 @@ class _AuthScreenState extends State<AuthScreen> {
   void handleAdminLogin(BuildContext context) {
     String password = passwordController.text;
     if (password == '3-Feb-04') {
-    //Navigation.goto(context, Dashboard());
+    Navigation.goto(context, Dashboard());
     }
   }
 }

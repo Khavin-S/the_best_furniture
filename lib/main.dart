@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:the_best_furniture/pages/admin/dashboard_page.dart';
+import 'package:the_best_furniture/pages/auth_page.dart';
 import 'package:the_best_furniture/pages/product_screen.dart';
 import 'package:the_best_furniture/providers/screen_size.dart';
 import 'package:the_best_furniture/pages/product_page.dart';
@@ -36,10 +38,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.purple,
       ),
         title: 'The best furniture',
-        home:  ProductPage());
+        home:  AuthScreen());
   }
 }
 
+/*
 class FirstPageDecider extends StatelessWidget{
   @override
   Widget build(BuildContext context){
@@ -56,3 +59,4 @@ class FirstPageDecider extends StatelessWidget{
       ProductScreen());
   }
 }
+*/
