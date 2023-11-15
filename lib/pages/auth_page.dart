@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:the_best_furniture/models/user.dart';
+import 'package:the_best_furniture/pages/home_page.dart';
+import 'package:the_best_furniture/providers/navigation.dart';
 import 'package:the_best_furniture/providers/screen_size.dart';
 import 'package:the_best_furniture/widgets/custom_button.dart';
 import 'package:the_best_furniture/widgets/custom_textfield.dart';
@@ -267,7 +269,7 @@ class _AuthScreenState extends State<AuthScreen> {
       final bool signedIn =
           await User(email: email, password: password).signIn();
       if (signedIn) {
-      Navigation.goto(context, ProductScreen());
+      Navigation.goto(context, HomePage());
       }
     } else {
       if (email == "" && password == "") {
@@ -303,14 +305,3 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 }
 
-class Navigation {
-  static void goto(context,object){
-      Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => object),
-  );
-   }
-  static void goback(context){
-       Navigator.pop(context);
-   }
-}

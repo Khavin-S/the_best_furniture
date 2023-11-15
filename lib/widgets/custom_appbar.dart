@@ -14,7 +14,7 @@ class MyAppBar extends StatelessWidget {
         pinned: false,
         snap: true,
         title: Text(
-          title,    
+          title,style: TextStyle(color: Colors.black,fontSize: ScreenSize.screenHeight/20,fontWeight: FontWeight.bold),    
         ),
         backgroundColor: Colors.transparent,
       ),

@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:the_best_furniture/pages/product_screen.dart';
 import 'package:the_best_furniture/providers/screen_size.dart';
-import 'package:the_best_furniture/pages/auth_page.dart';
 import 'package:the_best_furniture/pages/product_page.dart';
 
 void main() async {
@@ -10,13 +10,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: const FirebaseOptions(
-        apiKey: "AIzaSyC149qYLlQesce6TsDH8y6khPsztJ1Sqeg",
-        authDomain: "the-best-furniture-52bee.firebaseapp.com",
-        projectId: "the-best-furniture-52bee",
-        storageBucket: "the-best-furniture-52bee.appspot.com",
-        messagingSenderId: "839822430887",
-        appId: "1:839822430887:web:e099b46c1aa1e81d260182",
-        measurementId: "G-D4STXV438G"),
+  apiKey: "AIzaSyDnN8ekjR-otOcolqo1p6f-kVRGFAXPXuY",
+  authDomain: "ecommerce-furniture-23681.firebaseapp.com",
+  projectId: "ecommerce-furniture-23681",
+  storageBucket: "ecommerce-furniture-23681.appspot.com",
+  messagingSenderId: "770576114352",
+  appId: "1:770576114352:web:b29251d9d526ec647c9175"
+  ),
   );
   FirebaseAuth.instance.signOut();
   runApp(MyApp());
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.purple,
       ),
         title: 'The best furniture',
-        home: AuthScreen());
+        home:  ProductPage());
   }
 }
 

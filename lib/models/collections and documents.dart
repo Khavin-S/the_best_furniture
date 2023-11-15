@@ -8,9 +8,11 @@ class Collections {
       FirebaseFirestore.instance.collection('products');
   static CollectionReference categoriesCollection =
       FirebaseFirestore.instance.collection('categories');
+  static CollectionReference colorsCollectionCollection =
+      FirebaseFirestore.instance.collection('colors');
   static CollectionReference reportsCollection =
       FirebaseFirestore.instance.collection('reports');
-  static CollectionReference userCartCollection =  FirebaseFirestore.instance.collection('users').doc().collection('cart');
+  static CollectionReference userCartCollection = FirebaseFirestore.instance.collection('users').doc().collection('cart');
 }
 
 class Documents {

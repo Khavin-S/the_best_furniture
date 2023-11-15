@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:the_best_furniture/models/product.dart';
 import 'package:the_best_furniture/models/productservice.dart';
+import 'package:the_best_furniture/providers/screen_size.dart';
 
 class ProductScreen extends StatefulWidget {
   const ProductScreen({super.key});
@@ -21,7 +23,7 @@ class _ProductScreenState extends State<ProductScreen> {
     return Scaffold(
       body: Column(
         children: [
-          // My ui
+          
           Expanded(
             child: StreamBuilder<List<Product>>(
               stream: productService.filterProducts(
@@ -33,19 +35,20 @@ class _ProductScreenState extends State<ProductScreen> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   final List<Product> products = snapshot.data!;
-                  return ListView.builder(
-                    itemCount: products.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(products[index].name),
-                        subtitle: Text(
-                          'Category: ${products[index].category}\n'
-                          'Color: ${products[index].color}\n'
-                          'Price: \$${products[index].price.toStringAsFixed(2)}',
-                        ),
-                      );
-                    },
-                  );
+                  return GridView.builder(
+          itemCount: products.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4,
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 20,
+            childAspectRatio: ((ScreenSize.screenWidth * 0.18) /
+                (ScreenSize.screenHeight * 0.5)),
+          ),
+          itemBuilder: (context, index) {
+            final product = products[index];
+            return ProductCard(product: product, index: index);
+          },
+                );
                 } else if (snapshot.hasError) {
                   return Center(
                     child: Text('Error: ${snapshot.error}'),
@@ -64,6 +67,22 @@ class _ProductScreenState extends State<ProductScreen> {
   }
 }
 /*
+
+ ListView.builder(
+                  
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: Image.network(products[index].image),
+                        title: Text(products[index].name),
+                        subtitle: Text(
+                          'Category: ${products[index].category}\n'
+                          'Color: ${products[index].color}\n'
+                          'Price: \$${products[index].price.toStringAsFixed(2)}',
+                        ),
+                      );
+                    },
+                  );
 StreamBuilder<List<Product>>(
       stream: _productService.getProductStream(),
       builder: (context, snapshot) {
@@ -99,7 +118,9 @@ StreamBuilder<List<Product>>(
       },
     );
 
-    class ProductCard extends StatelessWidget {
+
+     */
+     class ProductCard extends StatelessWidget {
   final Product product;
   final int index;
 
@@ -161,5 +182,3 @@ StreamBuilder<List<Product>>(
     );
   }
 }
-
-    */
