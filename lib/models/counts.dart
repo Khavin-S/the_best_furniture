@@ -12,10 +12,19 @@ class GetCounts {
         await Collections.categoriesCollection.doc(category).get();
     return await snapshot.get('count');
   }
+  static Future<int> getCategoryProductCountId(String category) async {
+    final DocumentSnapshot snapshot =
+        await Collections.categoriesCollection.doc(category).get();
+    return await snapshot.get('count_id');
+  }
 
   static Future<int> getTotalUserCount() async {
     final DocumentSnapshot snapshot = await Documents.usersCount.get();
     return await snapshot.get('count');
+  }
+  static Future<int> getTotalUserIdCount() async {
+    final DocumentSnapshot snapshot = await Documents.usersCount.get();
+    return await snapshot.get('count_id');
   }
 
   static Future<int> getLiveOrdersCount() async {
@@ -33,6 +42,9 @@ class SetCount {
   static Future<void> updateUserCount(int count) async {
     await Documents.usersCount.update({'count': count});
   }
+  static Future<void> updateUserIdCount(int count) async {
+    await Documents.usersCount.update({'count': count});
+  }
 
   static Future<void> updateProductCount(int count) async {
     await Documents.productsCount.update({'count': count});
@@ -41,5 +53,9 @@ class SetCount {
   static Future<void> updateCategoryCount(String category, int count) async {
     await Collections.categoriesCollection
         .doc(category).update({'count': count});
+  }
+  static Future<void> updateCategoryCountId(String category, int count) async {
+    await Collections.categoriesCollection
+        .doc(category).update({'count_id': count});
   }
 }

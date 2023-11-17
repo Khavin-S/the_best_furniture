@@ -15,28 +15,29 @@ class ProductManagement extends StatefulWidget {
 }
 
 class _ProductManagementState extends State<ProductManagement> {
-  final TextEditingController idController = TextEditingController();
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController priceController = TextEditingController();
-  final TextEditingController stockController = TextEditingController();
-  String selectedCategory="";
-  String selectedColor="";
-  String? downloadUrl;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController stockController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  String selectedCategory = "";
+  String selectedColor = "";
+  String downloadUrl = "";
   @override
   Widget build(BuildContext context) {
-        ProductService productService = ProductService();
+    ProductService productService = ProductService();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
             TextFormField(
-              controller: idController,
-              decoration: const InputDecoration(labelText: 'Product ID'),
-            ),
-            TextFormField(
               controller: nameController,
               decoration: const InputDecoration(labelText: 'Product Name'),
+            ),
+            TextFormField(
+              controller: descriptionController,
+              decoration:
+                  const InputDecoration(labelText: 'Product description'),
             ),
             TextFormField(
               controller: priceController,
@@ -47,60 +48,76 @@ class _ProductManagementState extends State<ProductManagement> {
               decoration: const InputDecoration(labelText: 'Product stock'),
               keyboardType: TextInputType.number,
             ),
-             StreamBuilder<List<Categories>>(
-          stream: productService.getCategoryStream(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Center(child:  Text('No category available.'));
-            }
-            return DropdownButton( items: snapshot.data!.map((category) {
-                      return DropdownMenuItem<String>(
-                        value:  category.name,
-                        child: Text(category.name),
-                      );
-                    }).toList(), onChanged: (String? newValue) {
-                      setState(() {
-                        selectedCategory = newValue!;
-                      });
-                    },);
-          },
+            StreamBuilder<List<Categories>>(
+              stream: productService.getCategoryStream(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(child: Text('No category available.'));
+                }
+                return DropdownButton(
+                  items: snapshot.data!.map((category) {
+                    return DropdownMenuItem<String>(
+                      value: category.name,
+                      child: Text(category.name),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedCategory = newValue!;
+                    });
+                  },
+                );
+              },
             ),
-          StreamBuilder<List<ProductColors>>(
-          stream: productService.getColorStream(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Center(child:  Text('No color available.'));
-            }
-            return DropdownButton( items: snapshot.data!.map((color) {
-                      return DropdownMenuItem<String>(
-                        value:  color.name,
-                        child: Text(color.name),
-                      );
-                    }).toList(), onChanged: (String? newValue) {
-                      setState(() {
-                        selectedColor = newValue!;
-                      });
-                    },);
-          },
+            StreamBuilder<List<ProductColors>>(
+              stream: productService.getColorStream(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(child: Text('No color available.'));
+                }
+                return DropdownButton(
+                  items: snapshot.data!.map((color) {
+                    return DropdownMenuItem<String>(
+                      value: color.name,
+                      child: Text(color.name),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedColor = newValue!;
+                    });
+                  },
+                );
+              },
             ),
-            IconButton(onPressed: (){
-              handleImageUpload();
-            },icon: const Icon(Icons.upload_file_sharp),),
+            IconButton(
+              onPressed: () {
+                handleImageUpload();
+              },
+              icon: const Icon(Icons.upload_file_sharp),
+            ),
             ElevatedButton(
-              onPressed: (){
-                Admin().addProducts(nameController.text, int.parse(priceController.text), selectedCategory, downloadUrl, int.parse(stockController.text),selectedColor);
+              onPressed: () {
+                Admin().addProducts(
+                    nameController.text,
+                    descriptionController.text,
+                    int.parse(priceController.text),
+                    selectedCategory,
+                    downloadUrl,
+                    int.parse(stockController.text),
+                    selectedColor);
               },
               child: const Text('Add or Update products'),
             ),
@@ -117,15 +134,18 @@ class _ProductManagementState extends State<ProductManagement> {
     );
     if (result != null) {
       Uint8List? bytes = result.files.first.bytes;
-      String url = await uploadImage(bytes!);
+      String imageName = result.files.single.name;
+
+      String url = await uploadImage(bytes!, imageName);
       setState(() {
         downloadUrl = url;
       });
     }
   }
 
-  Future<String> uploadImage(Uint8List bytes) async {
-    Reference storageReference = FirebaseStorage.instance.ref().child("images/");
+  Future<String> uploadImage(Uint8List bytes, String imageName) async {
+    Reference storageReference =
+        FirebaseStorage.instance.ref().child("images/$imageName");
     UploadTask uploadTask = storageReference.putData(bytes);
     await uploadTask.whenComplete(() => null);
     String url = await storageReference.getDownloadURL();

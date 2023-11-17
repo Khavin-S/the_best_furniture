@@ -1,11 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:the_best_furniture/pages/admin/dashboard_page.dart';
-import 'package:the_best_furniture/pages/auth_page.dart';
-import 'package:the_best_furniture/pages/product_screen.dart';
+import 'package:the_best_furniture/pages/user/authentication_page.dart';
+import 'package:the_best_furniture/pages/user/products_page.dart';
 import 'package:the_best_furniture/providers/screen_size.dart';
-import 'package:the_best_furniture/pages/product_page.dart';
 
 void main() async {
 

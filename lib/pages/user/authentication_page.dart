@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:the_best_furniture/models/user.dart';
-import 'package:the_best_furniture/pages/admin/addproduct_page.dart';
 import 'package:the_best_furniture/pages/admin/dashboard_page.dart';
-import 'package:the_best_furniture/pages/home_page.dart';
-import 'package:the_best_furniture/pages/product_screen.dart';
+import 'package:the_best_furniture/pages/user/products_page.dart';
 import 'package:the_best_furniture/providers/navigation.dart';
 import 'package:the_best_furniture/providers/screen_size.dart';
 import 'package:the_best_furniture/widgets/custom_button.dart';
 import 'package:the_best_furniture/widgets/custom_textfield.dart';
-import 'package:the_best_furniture/pages/product_page.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -26,72 +23,76 @@ class _AuthScreenState extends State<AuthScreen> {
   late String name;
   String currentContent = 'auth';
   void changePage(String page) {
-    setState(() {
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
-    nameController = TextEditingController();
-      currentContent = page;
-    });
+    setState(
+      () {
+        emailController = TextEditingController();
+        passwordController = TextEditingController();
+        nameController = TextEditingController();
+        currentContent = page;
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Row(
-      children: [
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(
-              left: ScreenSize.screenWidth / 15,
-              right: ScreenSize.screenWidth / 15,
-            ),
-
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                 if (currentContent != 'auth')
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: IconButton(
-                              onPressed: () {
-                                changePage('auth');
-                              },
-                              icon: const Icon(Icons.arrow_back)),
-                        ),
-                Text(
-                  'Welcome to the best furniture',
-                  style: TextStyle(fontSize: ScreenSize.screenHeight / 20),
-                ),
-                          SizedBox(
-                        height: ScreenSize.screenHeight / 40,
-                      ),
-                Container(
-                  child: getContent(),
-                ),
-                          SizedBox(
-                        height: ScreenSize.screenHeight / 40,
-                      ),
-                const Text('Have a stable internet connection'),
-                          SizedBox(
-                        height: ScreenSize.screenHeight / 40,
-                      ),
-                 const Text(
-                    'This is an ecommerce platform for buying furniture, We have all kinds in it. We do even provide custom furnitures for our customers, So, that our customer get satisfied with our products. Explore our products and support us. Thank you!',textAlign: TextAlign.justify,)
-              ],
+      body: Row(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: ScreenSize.screenWidth / 15,
+                right: ScreenSize.screenWidth / 15,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (currentContent != 'auth')
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: IconButton(
+                          onPressed: () {
+                            changePage('auth');
+                          },
+                          icon: const Icon(Icons.arrow_back)),
+                    ),
+                  Text(
+                    'Welcome to the best furniture',
+                    style: TextStyle(fontSize: ScreenSize.screenHeight / 20),
+                  ),
+                  SizedBox(
+                    height: ScreenSize.screenHeight / 40,
+                  ),
+                  Container(
+                    child: getContent(),
+                  ),
+                  SizedBox(
+                    height: ScreenSize.screenHeight / 40,
+                  ),
+                  const Text('Have a stable internet connection'),
+                  SizedBox(
+                    height: ScreenSize.screenHeight / 40,
+                  ),
+                  const Text(
+                    'This is an ecommerce platform for buying furniture, We have all kinds in it. We do even provide custom furnitures for our customers, So, that our customer get satisfied with our products. Explore our products and support us. Thank you!',
+                    textAlign: TextAlign.justify,
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Expanded(
-          child: Image.asset(
-            'assets/images/banner1.jfif',
-            height: ScreenSize.screenHeight,
-            width: ScreenSize.screenWidth,
-            fit: BoxFit.cover,
+          Expanded(
+            child: Image.asset(
+              'assets/images/banner1.jfif',
+              height: ScreenSize.screenHeight,
+              width: ScreenSize.screenWidth,
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-      ],
-    ));
+        ],
+      ),
+    );
   }
 
   Widget getContent() {
@@ -122,9 +123,9 @@ class _AuthScreenState extends State<AuthScreen> {
             buttonColor: Colors.black,
           ),
         ),
-          SizedBox(
-                        height: ScreenSize.screenHeight / 40,
-                      ),
+        SizedBox(
+          height: ScreenSize.screenHeight / 40,
+        ),
         SizedBox(
           width: double.infinity,
           child: MyButton(
@@ -136,16 +137,16 @@ class _AuthScreenState extends State<AuthScreen> {
             textColor: Colors.black,
           ),
         ),
-          SizedBox(
-                        height: ScreenSize.screenHeight / 40,
-                      ),
+        SizedBox(
+          height: ScreenSize.screenHeight / 40,
+        ),
         Align(
           alignment: Alignment.centerRight,
           child: TextButton(
             onPressed: () {
               changePage('admin');
             },
-            child:  const Text(
+            child: const Text(
               'Admin?',
               textAlign: TextAlign.end,
               style: TextStyle(color: Colors.deepPurple),
@@ -166,9 +167,9 @@ class _AuthScreenState extends State<AuthScreen> {
           child: MyTextField(
               hintText: 'Enter your email', controller: emailController),
         ),
-                                  SizedBox(
-                        height: ScreenSize.screenHeight / 40,
-                      ),
+        SizedBox(
+          height: ScreenSize.screenHeight / 40,
+        ),
         SizedBox(
           width: double.infinity,
           child: MyTextField(
@@ -176,9 +177,9 @@ class _AuthScreenState extends State<AuthScreen> {
             controller: passwordController,
           ),
         ),
-                                  SizedBox(
-                        height: ScreenSize.screenHeight / 40,
-                      ),
+        SizedBox(
+          height: ScreenSize.screenHeight / 40,
+        ),
         SizedBox(
           width: double.infinity,
           child: MyButton(
@@ -272,7 +273,7 @@ class _AuthScreenState extends State<AuthScreen> {
       final bool signedIn =
           await User(email: email, password: password).signIn();
       if (signedIn) {
-      Navigation.goto(context, ProductPage());
+        Navigation.goto(context, ProductPage());
       }
     } else {
       if (email == "" && password == "") {
@@ -292,7 +293,7 @@ class _AuthScreenState extends State<AuthScreen> {
               email: email,
               password: password,
               address: "",
-              number: null)
+              number: "")
           .signUp();
       if (isSignedUp) {
         changePage('auth');
@@ -303,8 +304,7 @@ class _AuthScreenState extends State<AuthScreen> {
   void handleAdminLogin(BuildContext context) {
     String password = passwordController.text;
     if (password == '3-Feb-04') {
-    Navigation.goto(context, Dashboard());
+      Navigation.goto(context, Dashboard());
     }
   }
 }
-
