@@ -5,35 +5,84 @@ import 'package:the_best_furniture/models/collections%20and%20documents.dart';
 import 'package:the_best_furniture/models/counts.dart';
 
 class Admin {
-  void addCategories(String name, String description, String image) {
-    Collections.categoriesCollection.doc(name).set(
-        {'name': name, 'description': description, 'count': 0, 'image': image});
+ final String name = 'Khavin';
+ final String password = '3-Feb-04';
+ final String email = 'khavinprince@gmail.com';
+ final String phoneNumber = '+91 7538803228';
+ final String address = '16, Gandhiji street, Sivagiri, Erode';
+
+  bool login(String adminPassword){
+    if(adminPassword == password){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
-  Future<void> addProducts(String name, String description, int price,
-      String? category, String? image, int stock, String color) async {
-    int categoryCount =
-        await (GetCounts.getCategoryProductCount(category!)) + 1;
+  Future<void> addCategory(
+      String categoryName,
+      String categorySlogan) async {
+    try {
+      Collections.categoriesCollection.doc(categoryName).set({
+        'name': categoryName,
+        'count': 0,
+        'count_id': 0,
+        'slogan': categorySlogan,
+      });
+    } catch (e) {
+      print('Error adding category: $e');
+    }
+  }
+
+  void addColors(String colorName) {
+    try {
+      Collections.colorsCollectionCollection
+          .doc(colorName)
+          .set({'name': colorName, 'count': 0});
+    } catch (e) {
+      print('Error adding colors: $e');
+    }
+  }
+
+  Future<void> addProducts(String productName, String productDescription, int productPrice,
+    String productCategory, String productImage, int productStock, String productColor) async {
+    try{
+     DocumentSnapshot snapshot =  await Collections.categoriesCollection.doc(productCategory).get();
+      int categoryCount = snapshot['count'] + 1;
+      int categoryIdCount = snapshot['count_id'] + 1;
+    /*int categoryCount =
+        await (GetCounts.getCategoryProductCount(productCategory)) + 1;
     int categoryCountId =
-        await (GetCounts.getCategoryProductCountId(category!)) + 1;
+        await (GetCounts.getCategoryProductCountId(productCategory)) + 1;*/
     //DateTime serverTime = DateTime.now();
-    Collections.productsCollection
-        .doc("#${category.substring(0, 2).toUpperCase()}-$categoryCountId")
+    await Collections.productsCollection
+        .doc("#${productCategory.substring(0, 2).toUpperCase()}-$categoryIdCount")
         .set({
-      'id': '#${category.substring(0, 2).toUpperCase()}-$categoryCountId',
-      'name': name,
-      'price': price,
-      'category': category,
-      'image': image,
-      'stock': stock,
-      'color': color,
-      'description': description,
+      'id': '#${productCategory.substring(0, 2).toUpperCase()}-$categoryIdCount',
+      'name': productName,
+      'price': productPrice,
+      'category': productCategory,
+      'image': productImage,
+      'stock': productStock,
+      'color': productColor,
+      'description': productDescription,
       'createdTime': FieldValue.serverTimestamp(),
     });
-    SetCount.updateCategoryCount(category, categoryCount);
-    SetCount.updateCategoryCountId(category, categoryCountId);
+    await Collections.categoriesCollection.doc(productCategory).update(
+      {
+        'count': categoryCount,
+        'count_id' : categoryIdCount
+      }
+    );
+    /*SetCount.updateCategoryCount(productCategory, categoryCount);
+    SetCount.updateCategoryCountId(productCategory, categoryIdCount);*/
     int productCount = await (GetCounts.getTotalProductCount()) + 1;
     await SetCount.updateProductCount(productCount);
+    }
+    catch (e) {
+      print('Error adding product: $e');
+    }
   }
 
   Future<void> deleteProduct(String id, String category) async {

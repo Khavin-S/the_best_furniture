@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:the_best_furniture/pages/user/authentication_page.dart';
-import 'package:the_best_furniture/pages/user/products_page.dart';
+import 'package:the_best_furniture/pages/screen/dashboard_page.dart';
 import 'package:the_best_furniture/providers/screen_size.dart';
 
 void main() async {
@@ -36,7 +35,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.purple,
       ),
         title: 'The best furniture',
-        home:  AuthScreen());
+        home:  const DashboardPage());
   }
 }
 

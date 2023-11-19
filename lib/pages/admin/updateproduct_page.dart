@@ -8,7 +8,7 @@ class UpdateProductPage extends StatefulWidget {
   String description;
   int price;
   int stock;
-
+  
   UpdateProductPage(
       {super.key,
       required this.name,
@@ -31,3 +31,4 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
     );
   }
 }
+

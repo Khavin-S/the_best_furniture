@@ -116,6 +116,12 @@ class _DashboardState extends State<Dashboard> {
 
   Widget productList() {
     final ProductService productService = ProductService();
+    int selectedMinPrice = 0;
+    int selectedMaxPrice = 100000;
+    String selectedColor = '';
+    String selectedCategory = '';
+    String searchQuery = '';
+    bool isSortByNewest = false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -142,7 +148,13 @@ class _DashboardState extends State<Dashboard> {
         ),
         Expanded(
           child: StreamBuilder<List<Product>>(
-            stream: productService.getProductStream(),
+            stream: productService.getProductStream(
+                minPrice: selectedMinPrice,
+                maxPrice: selectedMaxPrice,
+                color: selectedColor,
+                category: selectedCategory,
+                searchQuery: searchQuery,
+                sortByNewest: isSortByNewest),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 final List<Product> products = snapshot.data!;
@@ -190,7 +202,16 @@ class _DashboardState extends State<Dashboard> {
                             return <PopupMenuEntry<String>>[
                               PopupMenuItem(
                                 onTap: () {
-                                  Navigation.goto(context, UpdateProductPage(name: product.name, color: product.color, image: product.image, category: product.category, description: product.description, price: product.price, stock: product.stock));
+                                  Navigation.goto(
+                                      context,
+                                      UpdateProductPage(
+                                          name: product.name,
+                                          color: product.color,
+                                          image: product.image,
+                                          category: product.category,
+                                          description: product.description,
+                                          price: product.price,
+                                          stock: product.stock));
                                 },
                                 value: 'Option 1',
                                 child: const Text(
@@ -234,11 +255,24 @@ class _DashboardState extends State<Dashboard> {
 
   Widget userList() {
     final ProductService productService = ProductService();
+    int selectedMinPrice = 0;
+    int selectedMaxPrice = 100000;
+    String selectedColor = '';
+    String selectedCategory = '';
+    String searchQuery = '';
+    bool isSortByNewest = false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         StreamBuilder<List<Product>>(
-          stream: productService.getProductStream(),
+          stream: productService.getProductStream(
+        minPrice: selectedMinPrice,
+        maxPrice: selectedMaxPrice,
+        color: selectedColor,
+        category: selectedCategory,
+        searchQuery: searchQuery,
+        sortByNewest: isSortByNewest
+          ),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final List<Product> products = snapshot.data!;
@@ -285,7 +319,7 @@ class _DashboardState extends State<Dashboard> {
                           return <PopupMenuEntry<String>>[
                             PopupMenuItem(
                               onTap: () {
-                               // Navigation.goto(context, ());
+                                // Navigation.goto(context, ());
                               },
                               value: 'Option 1',
                               child: const Text(
